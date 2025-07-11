@@ -1,0 +1,17 @@
+@use '../variables' as *;
+
+.hero {
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.hero-light {
+    background-color: $if-bg-light ;
+    color: $if-text-dark;
+}
+
+.hero-dark {
+    background-color: $if-dark-bg;
+    color: $if-dark-text;
+}
