@@ -7,13 +7,13 @@ const Home = () => {
 
     return (
         <>
-            <section className={`hero ${theme === 'dark' ? 'hero-dark' : 'hero-light'}`}>
+            <section className={`section ${theme}`}>
                 <h1>Hellow</h1>
             </section>
-            <section className={` hero ${theme !== 'dark' ? 'hero-dark' : 'hero-light'}`} >
+            {/* <section className={` hero ${theme !== 'dark' ? 'hero-dark' : 'hero-light'}`} >
                 <h1>Hellow</h1>
 
-            </section>
+            </section> */}
         </>
 
     );

@@ -1,2 +1,0 @@
-import '@/app/styles/globals.scss';
-

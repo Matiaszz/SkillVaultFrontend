@@ -1,10 +1,6 @@
 @use '../variables' as *;
+@use '../globals.scss' as *;
 
-.hero {
-    width: 100vw;
-    height: 100vh;
-
-}
 
 .hero-light {
     background-color: $if-bg-light ;
