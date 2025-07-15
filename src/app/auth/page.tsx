@@ -65,7 +65,7 @@ export default function Auth() {
             const res = err.response;
 
             if (!res) {
-                toast.error("Erro desconhecido de conexão.");
+                toast.error("Unknown connection error.");
                 return;
             }
 
@@ -79,7 +79,7 @@ export default function Auth() {
                     } else if (Array.isArray(errors.errors)) {
                         toast.error(errors.errors.join('\n'));
                     } else {
-                        toast.error("Erro de validação.");
+                        toast.error("Validation error.");
                     }
                     break;
 
@@ -89,14 +89,14 @@ export default function Auth() {
                     break;
 
                 case 409:
-                    toast.error(res.data.reason || "Usuário já autenticado. Faça logout primeiro.");
+                    toast.error(res.data.reason);
                     break;
 
 
 
                 default:
-                    console.error('Erro inesperado:', err);
-                    toast.error("Erro inesperado ao tentar autenticar.");
+                    console.error('Unexpected error:', err);
+                    toast.error("Unexpected error on login process.");
             }
 
         } finally {
