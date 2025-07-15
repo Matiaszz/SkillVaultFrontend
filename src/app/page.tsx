@@ -1,30 +1,23 @@
 'use client';
-import { useTheme } from './utils';
-import { UserService } from '@/services/userService';
-import './styles/home/home_style.scss';
-import { useEffect, useState } from 'react';
+
+import { useTheme, useGetLoggedUser } from './hooks';
 import { handleLogout } from '@/services/authService';
 import { useRouter } from 'next/navigation';
+import './styles/home/home_style.scss';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
     const theme = useTheme();
     const router = useRouter();
-    const [usernamePlaceholder, setUsernamePlaceholder] = useState('');
+    const [usernamePlaceholder, setUsernamePlaceholder] = useState('please, authenticate');
+
+    const loggedUser = useGetLoggedUser();
 
     useEffect(() => {
-        const getUsername = async () => {
-            try {
-                const u = await UserService.getCurrentUser();
-                setUsernamePlaceholder(u.data.username);
-            } catch (err: any) {
-                if (err.response?.status !== 403) {
-                    console.error('Unexpected error:', err);
-                }
-                setUsernamePlaceholder('please, authenticate');
-            }
-        };
-        getUsername();
-    }, []);
+        if (loggedUser !== null) {
+            setUsernamePlaceholder(loggedUser.username);
+        }
+    }, [loggedUser]);
 
     const logoutAndRedirect = async () => {
         await handleLogout();

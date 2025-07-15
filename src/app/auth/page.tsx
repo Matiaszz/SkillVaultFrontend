@@ -1,7 +1,7 @@
 'use client';
 import '@/app/styles/auth/authStyle.scss';
 import '@/app/styles/globals.scss';
-import { useTheme } from '@/app/utils';
+import { useTheme } from '@/app/hooks';
 import WorkerSvg from '../../../public/presentation_worker.svg';
 import Image from 'next/image';
 import { useState } from 'react';
