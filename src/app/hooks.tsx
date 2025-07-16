@@ -56,6 +56,7 @@ export const useGetUserById = (id: string | string[]) => {
                 switch (err?.response?.status) {
                     case 403:
                         router.push('/auth');
+                        break;
                 }
 
                 setUser(null);

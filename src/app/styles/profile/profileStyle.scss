@@ -1,0 +1,166 @@
+@use '../_variables' as *;
+@use '../globals.scss' as *;
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+
+    @media (max-width: 768px) {
+        padding: 1rem;
+    }
+}
+
+.profile-card {
+    background-color: $if-light-gray;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    h1 {
+        font-size: 2rem;
+        color: $if-dark-indigo;
+        text-align: center;
+    }
+
+    .profile-img {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        object-fit: cover;
+        align-self: center;
+        border: 2px solid $if-cyan-light;
+    }
+
+    .info-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+
+        label {
+            font-weight: 600;
+            color: $if-dark-indigo;
+        }
+
+        input,
+        select {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid $if-cyan-light;
+            background-color: white;
+            font-size: 1rem;
+            color: $if-dark-indigo;
+
+            &:disabled {
+                background-color: #f0f0f0;
+                color: #999;
+            }
+
+            &::placeholder {
+                color: $if-cyan-light;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: $if-dark-indigo;
+                box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+            }
+        }
+    }
+
+    .edit-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1rem;
+
+        button {
+            flex: 1;
+            padding: 0.75rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+
+            &.save {
+                background: $if-gradient-button;
+                color: white;
+                border: none;
+
+                &:hover {
+                    background: linear-gradient(to right, #4f46e5, #7c3aed);
+                }
+            }
+
+            &.cancel {
+                background: transparent;
+                color: $if-electric-purple;
+                border: 1px solid $if-electric-purple;
+
+                &:hover {
+                    background-color: rgba(134, 70, 255, 0.1);
+                }
+            }
+        }
+    }
+}
+
+// modo dark
+.section.dark {
+    .profile-card {
+        background-color: $if-dark-gray;
+
+        h1 {
+            color: $if-dark-text;
+        }
+
+        .info-group {
+            label {
+                color: $if-dark-text;
+            }
+
+            input,
+            select {
+                background-color: $if-dark-bg;
+                color: $if-dark-text;
+                border: 1px solid $if-dark-cyan;
+
+                &::placeholder {
+                    color: $if-dark-cyan;
+                }
+
+                &:focus {
+                    border-color: $if-dark-text;
+                    box-shadow: 0 0 0 2px rgba(139, 122, 237, 0.2);
+                }
+            }
+        }
+
+        .edit-buttons {
+            button.save {
+                background: $if-gradient-button-dark;
+
+                &:hover {
+                    background: linear-gradient(to right, #4338ca, #6d28d9);
+                }
+            }
+
+            button.cancel {
+                color: $if-electric-purple-dark;
+                border: 1px solid $if-electric-purple-dark;
+
+                &:hover {
+                    background-color: rgba(103, 62, 224, 0.1);
+                }
+            }
+        }
+    }
+}
