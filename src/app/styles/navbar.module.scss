@@ -24,7 +24,6 @@
             background-color: rgba(0, 0, 0, 0.05);
         }
 
-        // Estilos adicionados para o tema claro
         .profileButton {
             background: $if-gradient-button;
         }
@@ -34,7 +33,7 @@
         }
 
         .dropdownMenu {
-            background-color: #fff; // Fundo branco para o dropdown
+            background-color: #fff;
             border: 1px solid $if-light-gray;
             color: $if-text-dark;
         }
