@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { isTokenExpired } from './jwtService';
 
 const url = process.env.NEXT_PUBLIC_API_URL;
 console.log('API baseURL:', url);
