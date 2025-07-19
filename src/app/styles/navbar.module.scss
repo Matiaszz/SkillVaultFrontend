@@ -13,11 +13,34 @@
 
     // Light theme styles
     &.light {
-        background-color: $if-bg-light;
+        background-color: $if-light-indigo;
         color: $if-text-dark;
 
         .logo h1 {
-            color: $if-light-indigo;
+            color: $if-bg-light;
+        }
+
+        .notificationButton:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        // Estilos adicionados para o tema claro
+        .profileButton {
+            background: $if-gradient-button;
+        }
+
+        .profileIconWrapper {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .dropdownMenu {
+            background-color: #fff; // Fundo branco para o dropdown
+            border: 1px solid $if-light-gray;
+            color: $if-text-dark;
+        }
+
+        .dropdownItem:hover {
+            background-color: $if-bg-light;
         }
     }
 
@@ -36,6 +59,10 @@
 
         .profileButton {
             background: $if-gradient-button-dark;
+        }
+
+        .profileIconWrapper {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .dropdownMenu {
@@ -88,6 +115,10 @@
     @extend %button-base;
     background: $if-gradient-button-dark; // Matches dark theme from image
 
+    .light & {
+        background: $if-gradient-button;
+    }
+
     // Hide on smaller screens
     @media (max-width: 768px) {
         display: none;
@@ -118,7 +149,6 @@
 }
 
 .profileIconWrapper {
-    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 9999px;
     padding: 0.25rem; // p-1
 }

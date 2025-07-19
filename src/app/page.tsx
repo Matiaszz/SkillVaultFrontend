@@ -28,8 +28,7 @@ const Home = () => {
     return (
         <section className={`section ${theme}`}>
             <div className='home-container'>
-                <div>
-
+                <div className='logo'>
                     <h1>SV</h1>
                 </div>
                 <div>
