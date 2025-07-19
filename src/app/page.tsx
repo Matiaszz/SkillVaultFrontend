@@ -9,13 +9,14 @@ import { useEffect, useState } from 'react';
 const Home = () => {
     const theme = useTheme();
     const router = useRouter();
-    const [usernamePlaceholder, setUsernamePlaceholder] = useState('please, authenticate');
+    const [usernamePlaceholder, setUsernamePlaceholder] = useState('');
 
     const loggedUser = useGetLoggedUser();
 
     useEffect(() => {
+        console.log('loggedUser:', loggedUser);
         if (loggedUser !== null) {
-            setUsernamePlaceholder(loggedUser.username);
+            setUsernamePlaceholder(`Hello, ${loggedUser.name}`);
         }
     }, [loggedUser]);
 
@@ -26,10 +27,15 @@ const Home = () => {
 
     return (
         <section className={`section ${theme}`}>
-            <h1>Hello, {`${usernamePlaceholder}!`}</h1>
-            {usernamePlaceholder !== 'please, authenticate' ? (
+            <h1>SV</h1>
+            <p>
+                {`${usernamePlaceholder}${usernamePlaceholder !== '' ? '.' : ''} `}
+                Welcome to SkillVault! An application that you get your certifications
+                and skills validated by the most professional and authorized people
+            </p>
+            {loggedUser && (
                 <button onClick={logoutAndRedirect}>Logout</button>
-            ) : null}
+            )}
         </section>
     );
 };
