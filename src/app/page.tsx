@@ -27,15 +27,25 @@ const Home = () => {
 
     return (
         <section className={`section ${theme}`}>
-            <h1>SV</h1>
-            <p>
-                {`${usernamePlaceholder}${usernamePlaceholder !== '' ? '.' : ''} `}
-                Welcome to SkillVault! An application that you get your certifications
-                and skills validated by the most professional and authorized people
-            </p>
-            {loggedUser && (
-                <button onClick={logoutAndRedirect}>Logout</button>
-            )}
+            <div className='home-container'>
+                <div>
+
+                    <h1>SV</h1>
+                </div>
+                <div>
+                    <p>
+                        {`${usernamePlaceholder}${usernamePlaceholder !== '' ? '.' : ''} `}
+                        Welcome to SkillVault! An application that you get your certifications
+                        and skills validated by the most professional and authorized people
+                    </p>
+                </div>
+                {loggedUser && (
+                    <button onClick={logoutAndRedirect}>Logout</button>
+                )}
+            </div>
+
+
+
         </section>
     );
 };

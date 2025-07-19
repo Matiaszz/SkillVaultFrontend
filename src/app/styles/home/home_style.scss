@@ -1,13 +1,8 @@
 @use '../variables' as *;
 @use '../globals.scss' as *;
 
+.home-container {}
 
-.hero-light {
-    background-color: $if-bg-light ;
-    color: $if-text-dark;
-}
-
-.hero-dark {
-    background-color: $if-dark-bg;
-    color: $if-dark-text;
+.tes {
+    color: #fff;
 }
