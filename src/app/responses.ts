@@ -43,6 +43,17 @@ export interface UserSimpleDTO {
     email: string;
 }
 
+export interface UserProfileDTO {
+    id: string;
+    username: string,
+    profilePictureBlobName: string,
+    name: string,
+    email: string,
+    github: string,
+    linkedin: string,
+    site: string
+}
+
 export interface UserProfilePicture {
     id: string;
     blobName: string;
