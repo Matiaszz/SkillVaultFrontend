@@ -1,4 +1,4 @@
-export interface UserResponseDTO {
+export interface UserResponseDTO { // response da api
     id: string;
     username: string;
     role: 'EVALUATOR' | 'USER' | 'ADMIN';

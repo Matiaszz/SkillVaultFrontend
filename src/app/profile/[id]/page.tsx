@@ -17,9 +17,14 @@ export default function Profile() {
     const [userById, setUserById] = useState<UserResponseDTO | null>(null);
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
+        username: '',
         name: '',
         email: '',
-        role: '',
+        biography: '',
+        linkedin: '',
+        github: '',
+        instagram: '',
+        site: '',
     });
     const [image, setImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
@@ -31,14 +36,18 @@ export default function Profile() {
 
         const fetch = async () => {
             try {
-                // Normalize param.id caso seja array
                 const userId = Array.isArray(param.id) ? param.id[0] : param.id;
                 const user = await UserService.getUserById(userId);
                 setUserById(user);
                 setFormData({
+                    username: user.username,
                     name: user.name,
                     email: user.email,
-                    role: user.role,
+                    biography: user.biography || '',
+                    linkedin: user.linkedin || '',
+                    github: user.github || '',
+                    instagram: user.instagram || '',
+                    site: user.site || '',
                 });
             } catch {
                 setUserById(null);
@@ -48,7 +57,6 @@ export default function Profile() {
         fetch();
     }, [param.id]);
 
-    // Limpa preview quando componente desmontar ou preview mudar
     useEffect(() => {
         return () => {
             if (preview) URL.revokeObjectURL(preview);
@@ -134,7 +142,8 @@ export default function Profile() {
                     )}
 
                     <div className="info-group">
-                        <label>Nome</label>
+
+                        <label>Name</label>
                         <input
                             name="name"
                             value={formData.name}
@@ -150,13 +159,6 @@ export default function Profile() {
                             disabled={!isEditing}
                         />
 
-                        <label>Função</label>
-                        <input
-                            name="role"
-                            value={formData.role}
-                            onChange={handleInputChange}
-                            disabled={!isEditing || !loggedUser?.role.includes('ADMIN')}
-                        />
                     </div>
 
                     {isOwner && (
