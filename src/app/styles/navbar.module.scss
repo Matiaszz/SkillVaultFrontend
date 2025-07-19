@@ -75,12 +75,16 @@
 }
 
 // Logo styling
-.logo h1 {
+.logo h1 a {
     font-size: 1.875rem; // text-3xl
     font-weight: bold;
     font-style: italic;
     font-family: 'Corinthia', cursive;
     user-select: none;
+}
+
+.logo h1 a:hover {
+    cursor: pointer;
 }
 
 // Right side menu container
@@ -174,4 +178,9 @@
     text-decoration: none;
     transition: background-color 0.2s;
     cursor: pointer;
+    width: 100%;
+    background: transparent;
+    border: none;
+    text-align: left;
+    font-family: inherit;
 }

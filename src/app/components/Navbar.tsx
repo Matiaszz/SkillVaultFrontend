@@ -4,28 +4,41 @@ import React, { useState, useEffect, useRef, FC } from 'react';
 import { FileText, Bell, User, ChevronDown, ChevronUp, ClipboardList, Award, LogOut } from 'lucide-react';
 import styles from '@/app/styles/navbar.module.scss';
 import { useTheme } from '../hooks';
+import { useRouter } from 'next/navigation';
+import { handleLogout } from '@/services/authService';
 
+const DropdownMenu: FC = () => {
+    const router = useRouter();
 
-const DropdownMenu: FC = () => (
-    <div className={styles.dropdownMenu} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-        <a href="#" className={styles.dropdownItem} role="menuitem">
-            <User size={18} />
-            <span>Profile</span>
-        </a>
-        <a href="#" className={styles.dropdownItem} role="menuitem">
-            <ClipboardList size={18} />
-            <span>Evaluations</span>
-        </a>
-        <a href="#" className={styles.dropdownItem} role="menuitem">
-            <Award size={18} />
-            <span>Certificates</span>
-        </a>
-        <a href="#" className={styles.dropdownItem} role="menuitem">
-            <LogOut size={18} />
-            <span>Logout</span>
-        </a>
-    </div>
-);
+    // A função de logout está agora corretamente definida.
+    const logoutAndRedirect = async () => {
+        await handleLogout();
+        router.push('/auth');
+    };
+
+    // O return está agora no local correto, fora da função de logout.
+    return (
+        <div className={styles.dropdownMenu} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+            <a href="#" className={styles.dropdownItem} role="menuitem">
+                <User size={18} />
+                <span>Perfil</span>
+            </a>
+            <a href="#" className={styles.dropdownItem} role="menuitem">
+                <ClipboardList size={18} />
+                <span>Avaliações</span>
+            </a>
+            <a href="#" className={styles.dropdownItem} role="menuitem">
+                <Award size={18} />
+                <span>Certificados</span>
+            </a>
+            {/* O item de logout é agora um botão que chama a função correta no onClick. */}
+            <button onClick={logoutAndRedirect} className={styles.dropdownItem} role="menuitem">
+                <LogOut size={18} />
+                <span>Sair</span>
+            </button>
+        </div>
+    );
+};
 
 // --- Main Navbar Component ---
 const Navbar: FC = () => {
@@ -46,11 +59,13 @@ const Navbar: FC = () => {
         };
     }, []);
 
+
+
     return (
         <nav className={`${styles.nav} ${theme === 'dark' ? styles.dark : styles.light}`}>
             {/* Left side: Logo */}
             <div className={styles.logo}>
-                <h1>SV</h1>
+                <h1><a>SV</a></h1>
             </div>
 
             {/* Right side: Menu items */}

@@ -3,50 +3,53 @@
 import { useTheme, useGetLoggedUser } from './hooks';
 import { handleLogout } from '@/services/authService';
 import { useRouter } from 'next/navigation';
-import './styles/home/home_style.scss';
+import { Power } from 'lucide-react';
+import '@/app/styles/home/home_style.scss';
 import { useEffect, useState } from 'react';
 
 const Home = () => {
     const theme = useTheme();
     const router = useRouter();
-    const [usernamePlaceholder, setUsernamePlaceholder] = useState('');
+    const [welcomeMessage, setWelcomeMessage] = useState<string>('');
 
     const loggedUser = useGetLoggedUser();
 
     useEffect(() => {
-        console.log('loggedUser:', loggedUser);
-        if (loggedUser !== null) {
-            setUsernamePlaceholder(`Hello, ${loggedUser.name}`);
+        const baseMessage = "Welcome to SkillVault! An application that you get your certifications and skills validated by the most professional and authorized people";
+        if (loggedUser) {
+            setWelcomeMessage(`Hello, ${loggedUser.name}. ${baseMessage}`);
+        } else {
+            setWelcomeMessage(baseMessage);
         }
     }, [loggedUser]);
 
-    const logoutAndRedirect = async () => {
-        await handleLogout();
-        router.push('/auth');
+
+
+    const handleGetStarted = () => {
+        if (loggedUser) {
+            router.push('/dashboard');
+        } else {
+            router.push('/auth');
+        }
     };
 
     return (
         <section className={`section ${theme}`}>
-            <div className='home-container'>
-                <div className='logo'>
+            <div className={'homeContainer'}>
+                <div className={'logo'}>
                     <h1>SV</h1>
                 </div>
-                <div>
-                    <p>
-                        {`${usernamePlaceholder}${usernamePlaceholder !== '' ? '.' : ''} `}
-                        Welcome to SkillVault! An application that you get your certifications
-                        and skills validated by the most professional and authorized people
-                    </p>
+                <div className={'welcomeText'}>
+                    <p>{welcomeMessage}</p>
                 </div>
-                {loggedUser && (
-                    <button onClick={logoutAndRedirect}>Logout</button>
-                )}
+                <button onClick={handleGetStarted} className={'ctaButton'}>
+                    <Power size={16} />
+                    <span>Get started now</span>
+                </button>
             </div>
-
-
-
         </section>
     );
 };
+
 
 export default Home;

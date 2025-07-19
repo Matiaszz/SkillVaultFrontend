@@ -1,4 +1,89 @@
 @use '../variables' as *;
-@use '../globals.scss' as *;
+@import url('https://fonts.googleapis.com/css2?family=Corinthia&display=swap');
 
-.home-container {}
+// A secção principal que ocupa o ecrã inteiro
+.section {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+    padding: 1rem;
+
+    // Estilos do tema claro
+    &.light {
+        background-color: $if-bg-light;
+        color: $if-text-dark;
+
+        .logo h1 {
+            color: $if-light-indigo;
+        }
+
+        .ctaButton {
+            background: $if-gradient-button;
+        }
+    }
+
+    &.dark {
+        background-color: $if-dark-bg;
+        color: $if-dark-text;
+
+        .logo h1 {
+            color: $if-dark-text;
+        }
+
+        .ctaButton {
+            background: $if-gradient-button-dark;
+        }
+    }
+}
+
+// O contentor interno para o conteúdo
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 600px;
+}
+
+// Estilização do logo
+.logo h1 {
+    font-family: 'Corinthia', cursive;
+    font-size: 8rem; // Tamanho aumentado para corresponder à imagem
+    font-weight: normal;
+    user-select: none;
+    margin-bottom: 2rem;
+    line-height: 1;
+}
+
+// Estilização do texto de boas-vindas
+.welcomeText {
+    font-size: 1.125rem; // 18px
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+}
+
+// Estilização do botão "Get started now"
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px; // Totalmente arredondado
+    font-size: 0.875rem; // 14px
+    font-weight: 500;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.2s;
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+
+    &:hover {
+        filter: brightness(1.1);
+        transform: translateY(-2px);
+    }
+}
