@@ -75,15 +75,17 @@
 }
 
 // Logo styling
-.logo h1 a {
+.logo button {
     font-size: 1.875rem; // text-3xl
     font-weight: bold;
     font-style: italic;
     font-family: 'Corinthia', cursive;
     user-select: none;
+    background-color: transparent;
+    border: transparent;
 }
 
-.logo h1 a:hover {
+.logo button:hover {
     cursor: pointer;
 }
 

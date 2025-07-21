@@ -12,7 +12,11 @@ export default function Profile() {
     const theme = useTheme();
     const param = useParams();
     const router = useRouter();
-    const loggedUser = useGetLoggedUser();
+
+    // AQUI ESTÁ A CORREÇÃO PRINCIPAL:
+    // Desestruturamos o objeto retornado pelo hook.
+    // A propriedade 'user' do hook é renomeada para a constante 'loggedUser'.
+    const { user: loggedUser, isLoading } = useGetLoggedUser();
 
     const [userById, setUserById] = useState<UserResponseDTO | null>(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -28,12 +32,13 @@ export default function Profile() {
     const [image, setImage] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
 
+    // CORRIGIDO: Agora 'loggedUser' é o objeto de usuário correto ou null.
     const isOwner = loggedUser && userById && loggedUser.id === userById.id;
 
     useEffect(() => {
         if (!param.id) return;
 
-        const fetch = async () => {
+        const fetchProfileUser = async () => {
             try {
                 const userId = Array.isArray(param.id) ? param.id[0] : param.id;
                 const user = await UserService.getUserById(userId);
@@ -52,7 +57,7 @@ export default function Profile() {
             }
         };
 
-        fetch();
+        fetchProfileUser();
     }, [param.id]);
 
     useEffect(() => {
@@ -61,16 +66,27 @@ export default function Profile() {
         };
     }, [preview]);
 
-    if (userById === null) {
+    // Esta lógica de redirecionamento agora funcionará corretamente.
+    useEffect(() => {
+        if (isLoading) {
+            return;
+        }
+        if (!isLoading && !loggedUser) {
+            router.push('/auth');
+        }
+    }, [loggedUser, isLoading, router]);
+
+    // O estado de carregamento agora funciona.
+    if (isLoading) {
         return (
             <section className={`section ${theme}`}>
-                <h1>404 - Not Found</h1>
+                <p>Verificando autenticação...</p>
             </section>
         );
     }
 
-    if (loggedUser === null) {
-        router.push('/auth');
+    // Esta verificação impede a renderização desnecessária antes do redirecionamento.
+    if (!loggedUser) {
         return null;
     }
 
@@ -112,19 +128,20 @@ export default function Profile() {
         }
     };
 
+    // O restante do seu JSX não precisa de alterações.
     return (
         <section className={`section ${theme}`}>
             <div className="profile-container">
                 <div className="profile-card">
-                    <h1>{isOwner ? 'Seu Perfil' : `Perfil de ${userById.name}`}</h1>
+                    <h1>{isOwner ? 'Seu Perfil' : `Perfil de ${userById?.name}`}</h1>
 
                     <img
                         src={
                             preview
                                 ? preview
-                                : userById.profilePicture
+                                : userById?.profilePicture
                                     ? `${process.env.NEXT_PUBLIC_API_URL}/user/profilePicture/${userById.profilePicture.blobName}`
-                                    : '/default-profile.png'
+                                    : '/defaultPicture.jpg'
                         }
                         alt="Profile picture"
                         className="profile-img"
@@ -140,7 +157,6 @@ export default function Profile() {
                     )}
 
                     <div className="info-group">
-
                         <label>Name</label>
                         <input
                             name="name"
@@ -156,7 +172,6 @@ export default function Profile() {
                             onChange={handleInputChange}
                             disabled={!isEditing}
                         />
-
                     </div>
 
                     {isOwner && (

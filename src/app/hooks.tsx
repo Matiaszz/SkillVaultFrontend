@@ -23,48 +23,72 @@ export const useTheme = () => {
 
 export const useGetLoggedUser = () => {
     const [user, setUser] = useState<UserResponseDTO | null>(null);
+    // 1. Adicionar o estado de carregamento, começando como 'true'
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        let isMounted = true;
+
         const fetchUser = async () => {
             try {
                 const fetchedUser = await UserService.getCurrentUser();
-                setUser(fetchedUser.data);
+                if (isMounted) {
+                    setUser(fetchedUser.data);
+                }
             } catch (err: any) {
                 if (err?.response?.status !== 403) {
                     console.error('Unexpected error on user handling:', err);
                 }
-                setUser(null);
+                if (isMounted) {
+                    setUser(null);
+                }
+            } finally {
+                // 2. Usar 'finally' para garantir que o carregamento termine,
+                // não importa se a busca deu certo ou errado.
+                if (isMounted) {
+                    setIsLoading(false);
+                }
             }
         };
 
         fetchUser();
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
-    return user;
+    // 3. Retornar um objeto com o usuário E o estado de carregamento
+    return { user, isLoading };
 };
-
 export const useGetUserById = (id: string | string[]) => {
     const [user, setUser] = useState<UserResponseDTO | null>(null);
-    const router = useRouter();
 
     useEffect(() => {
+        let isMounted = true;
+
         const fetchUser = async () => {
             try {
                 const fetchedUser = await UserService.getUserById(id);
-                setUser(fetchedUser);
-            } catch (err: any) {
-                switch (err?.response?.status) {
-                    case 403:
-                        router.push('/auth');
-                        break;
+                if (isMounted) {
+                    setUser(fetchedUser);
                 }
-
-                setUser(null);
+            } catch (err: any) {
+                console.error('Failed to get user by id:', err);
+                if (isMounted) {
+                    setUser(null);
+                }
             }
         };
 
-        fetchUser();
-    }, []);
+        if (id) {
+            fetchUser();
+        }
+
+        return () => {
+            isMounted = false;
+        };
+    }, [id]);
 
     return user;
 };

@@ -12,21 +12,21 @@ const Home = () => {
     const router = useRouter();
     const [welcomeMessage, setWelcomeMessage] = useState<string>('');
 
-    const loggedUser = useGetLoggedUser();
+    const { user } = useGetLoggedUser();
 
     useEffect(() => {
         const baseMessage = "Welcome to SkillVault! An application that you get your certifications and skills validated by the most professional and authorized people";
-        if (loggedUser) {
-            setWelcomeMessage(`Hello, ${loggedUser.name}. ${baseMessage}`);
+        if (user) {
+            setWelcomeMessage(`Hello, ${user.name}. ${baseMessage}`);
         } else {
             setWelcomeMessage(baseMessage);
         }
-    }, [loggedUser]);
+    }, [user]);
 
 
 
     const handleGetStarted = () => {
-        if (loggedUser) {
+        if (user) {
             router.push('/dashboard');
         } else {
             router.push('/auth');
